@@ -25,9 +25,10 @@ This project was developed in the context of the **MYE030** course at the
 1. **Clone the repository** and import it as a **Maven project** in your preferred IDE.
 2. **Create the database schema** using your local MySQL server.
 3. **Load the clean CSV files** into the corresponding database tables.
-4. Update `application.properties` with your **own database credentials** and connection settings.
-5. Run the project by executing the **main class** as a Java application from your IDE.
-6. Connect to localhost:8080
+4. **Create the SQL Views** using the corresponding files from the data folder.
+5. Update `application.properties` with your **own database credentials** and connection settings.
+6. Run the project by executing the **main class** as a Java application from your IDE.
+7. Connect to localhost:8080
 
 
 
