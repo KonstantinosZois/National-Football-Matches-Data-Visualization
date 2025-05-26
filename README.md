@@ -4,14 +4,12 @@ A Spring Boot web application for visualizing national football statistics and c
 This project was developed in the context of the **MYE030** course at the  
 **Department of Computer Science and Engineering, University of Ioannina**.
 
----
 
 ## Team
 
 - **Κωνσταντίνος Ζώης** – ΑΜ: 5226  
 - **Ιωάννης Φίλλης** – ΑΜ: 5380
 
----
 
 ## Technologies Used
 
@@ -21,7 +19,6 @@ This project was developed in the context of the **MYE030** course at the
 - **Bootstrap**
 - **Chart.js**
 
----
 
 ## Usage
 
@@ -31,7 +28,6 @@ This project was developed in the context of the **MYE030** course at the
 4. Update `application.properties` with your **own database credentials** and connection settings.
 5. Run the project by executing the **main class** as a Java application from your IDE.
 
----
 
 
 ## 📊 Features
