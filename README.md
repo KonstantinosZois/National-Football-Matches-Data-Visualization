@@ -30,7 +30,7 @@ This project was developed in the context of the **MYE030** course at the
 
 
 
-## 📊 Features
+## Features
 
 - View top scorers by country
 - Analyze team performance by year and location
