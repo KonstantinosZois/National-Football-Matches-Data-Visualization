@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}">Default Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<div style="display: flex; flex-direction: column; align-items: center; margin-top: 30px;">
+	<h3 style="margin-bottom: 5px;" th:text="${title}">Default Title</h3>
+	 <p style="font-size: 18px; color: #555; margin-bottom: 15px;" th:text="${description}">
+      	Default
+    </p>
+    <canvas id="scatterPlot" width="1000" height="600"></canvas>
+    
+    <div style="height: 100px;"></div>
+    
+    <a href="/countries/show_options">Back to National Teams Analytics</a>
+</div>
+</div>
+
+<script th:inline="javascript">
+    var countryData = /*[[${scatterPlotInfo}]]*/ [];
+
+	var colors = [
+    'rgba(255, 60, 32, 1)',
+    'rgba(54, 162, 235, 1)',
+    'rgba(255, 206, 86, 1)',
+    'rgba(38, 207, 226, 1)',
+    'rgba(153, 102, 255, 1)',
+    'rgba(255, 140, 50, 1)',
+    'rgba(199, 199, 199, 1)',
+    'rgba(83, 102, 255, 1)',
+    'rgba(255, 105, 180, 1)',
+    'rgba(6, 159, 57, 1)'
+];
+
+var datasets = countryData.map(function(c, index) {
+    return {
+        label: c.name,
+        data: [{
+            x: c.x,
+            y: c.y
+        }],
+        backgroundColor: colors[index % colors.length], 
+        pointRadius: 6
+    };
+});
+
+	const xyLabel = /*[[${xyLabel}]]*/ ["X Label", "Y Label"];
+
+    const ctx = document.getElementById('scatterPlot').getContext('2d');
+    
+    const xValue = xyLabel[0]
+     const yValue = xyLabel[1]
+
+    new Chart(ctx, {
+        type: 'scatter',
+        data: {
+            datasets: datasets
+        },
+        options: {
+        	responsive: false,
+        plugins: {
+            title: {
+                display: true,
+                text: xyLabel[0] + ' vs ' + xyLabel[1]
+            },
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        return context.dataset.label + ': ' + xValue + '= ' + context.raw.x + ', ' + yValue + '= ' + context.raw.y;
+                    }
+                }
+            },
+            legend: {
+                display: true,
+                position: 'bottom'
+            }
+        },
+        scales: {
+            x: {
+                title: {
+                    display: true,
+                    text: xyLabel[0]
+                },
+                beginAtZero: true
+            },
+            y: {
+                title: {
+                    display: true,
+                    text: xyLabel[1]
+                },
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>
+
+
+
+
+</body>
+</html>

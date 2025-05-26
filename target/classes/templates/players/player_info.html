@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Info</title>
+</head>
+<body>
+
+<div style="display: flex; flex-direction: column; align-items: center; margin-top: 30px;">
+
+<h2>Player Information</h2>
+
+<div>
+    <p><strong>Name:</strong> <span th:text="${selectedPlayer.scorer}"></span></p>
+    <p><strong>Country Name:</strong> <span th:text="${selectedPlayer.countryName}"></span></p>
+    <p><strong>Total Goals:</strong> <span th:text="${selectedPlayer.totalGoals}"></span></p>
+    <p><strong>Max Goals per Game:</strong> <span th:text="${selectedPlayer.maxGoalsPerGame}"></span></p>
+    <p><strong>Total Own goals:</strong> <span th:text="${selectedPlayer.totalOwnGoals}"></span></p>
+    <p><strong>First Goal in his career in:</strong> <span th:text="${selectedPlayer.firstYear}"></span></p>
+    <p><strong>Penalties Scored:</strong> <span th:text="${selectedPlayer.penaltiesScored}"></span></p>
+    <p><strong>Last goal in his career in:</strong> <span th:text="${selectedPlayer.lastYear}"></span></p>
+    
+    <div style="height: 10px;"></div>
+    
+    <h2>Player Team: <span th:text="${selectedPlayer.countryName}"></span> </h2>
+    <div style="height: 20px;"></div>
+    <h4>Team Statistics While Player Played:</h4>
+    <p><strong>Team Matches:</strong> <span th:text="${teamStats.totalMatchesPlayed}"></span></p>
+    <p><strong>Team Wins:</strong> <span th:text="${teamStats.totalWins}"></span></p>
+    <p><strong>Team Losses:</strong> <span th:text="${teamStats.totalLosses}"></span></p>
+    <p><strong>Team Draws:</strong> <span th:text="${teamStats.totalDraws}"></span></p>
+    <p><strong>Team Goals Scored:</strong> <span th:text="${teamStats.totalGoalsScored}"></span></p>
+    <p><strong>Team Goals Conceded:</strong> <span th:text="${teamStats.totalGoalsConceded}"></span></p>
+    
+</div>
+
+<form method="POST" action="/players/matches">
+    <input type="hidden" name="scorer" th:value="${selectedPlayer.scorer}" />
+    <input type="hidden" name="countryName" th:value="${selectedPlayer.countryName}" />
+    <button type="submit" class="btn btn-primary">
+    View Goals
+	</button>
+</form>
+<div style="height: 10px;"></div>
+<form method="POST" action="/players/yearly_stats">
+    <input type="hidden" name="scorer" th:value="${selectedPlayer.scorer}" />
+    <input type="hidden" name="countryName" th:value="${selectedPlayer.countryName}" />
+    <button type="submit" class="btn btn-primary">
+    View Yearly Stats
+	</button>
+</form>
+
+<div style="height: 100px;"></div>
+<a href="/players/show_list_of_players">Back to Player Analytics</a>
+<div style="height: 10px;"></div>
+<a href="/">Back to HomePage</a>
+</div>
+
+
+</div>
+</body>
+</html>

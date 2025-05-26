@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <title>Yearly Stats</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        canvas {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+<div style="display: flex; flex-direction: column; align-items: center; margin-top: 30px;">
+    <h2>Yearly Stats</h2>
+    
+    <!-- First chart (Total Wins, Draws, Losses) -->
+    <canvas id="statsChart" width="1000" height="600"></canvas>
+
+    <!-- Second chart (Home Wins, Home Losses, Home Draws) -->
+    <canvas id="homeStatsChart" width="1000" height="600"></canvas>
+
+    <!-- Third chart (Away Wins, Away Losses, Away Draws) -->
+    <canvas id="awayStatsChart" width="1000" height="600"></canvas>
+
+    <!-- Button to go back to the country's info page -->
+    <div style="margin-top: 30px;">
+        <a href="/">Back to HomePage</a>
+    </div>
+
+    <script th:inline="javascript">
+
+        var yearlyStats = /*[[${yearlyStats}]]*/ [];
+
+        var years = yearlyStats.map(function(d) { return d.year; });
+        var totalWins = yearlyStats.map(function(d) { return d.totalWins; });
+        var totalDraws = yearlyStats.map(function(d) { return d.totalDraws; });
+        var totalLosses = yearlyStats.map(function(d) { return d.totalLosses; });
+
+        var homeWins = yearlyStats.map(function(d) { return d.homeWins; });
+        var homeDraws = yearlyStats.map(function(d) { return d.homeDraws; });
+        var homeLosses = yearlyStats.map(function(d) { return d.homeLosses; });
+
+        var awayWins = yearlyStats.map(function(d) { return d.awayWins; });
+        var awayDraws = yearlyStats.map(function(d) { return d.awayDraws; });
+        var awayLosses = yearlyStats.map(function(d) { return d.awayLosses; });
+
+        var ctx = document.getElementById('statsChart').getContext('2d');
+
+        new Chart(ctx, {
+            type: 'line', 
+            data: {
+                labels: years, 
+                datasets: [
+                    {
+                        label: 'Total Wins',
+                        data: totalWins, 
+                        borderColor: 'green', 
+                        fill: false
+                    },
+                    {
+                        label: 'Total Draws',
+                        data: totalDraws, 
+                        borderColor: 'blue',
+                        fill: false
+                    },
+                    {
+                        label: 'Total Losses',
+                        data: totalLosses, 
+                        borderColor: 'red', 
+                        fill: false
+                    }
+                ]
+            },
+            options: {
+                responsive: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Yearly Total Stats'
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Year'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Matches'
+                        },
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+
+        var homeCtx = document.getElementById('homeStatsChart').getContext('2d');
+
+        new Chart(homeCtx, {
+            type: 'line', 
+            data: {
+                labels: years, 
+                datasets: [
+                    {
+                        label: 'Home Wins',
+                        data: homeWins, 
+                        borderColor: 'green',
+                        fill: false
+                    },
+                    {
+                        label: 'Home Draws',
+                        data: homeDraws, 
+                        borderColor: 'blue', 
+                        fill: false
+                    },
+                    {
+                        label: 'Home Losses',
+                        data: homeLosses, 
+                        borderColor: 'red', 
+                        fill: false
+                    }
+                ]
+            },
+            options: {
+                responsive: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Yearly Home Stats'
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Year'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Matches'
+                        },
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+
+        var awayCtx = document.getElementById('awayStatsChart').getContext('2d');
+
+
+        new Chart(awayCtx, {
+            type: 'line', 
+            data: {
+                labels: years, 
+                datasets: [
+                    {
+                        label: 'Away Wins',
+                        data: awayWins, 
+                        borderColor: 'green', 
+                        fill: false
+                    },
+                    {
+                        label: 'Away Draws',
+                        data: awayDraws, 
+                        borderColor: 'blue', 
+                        fill: false
+                    },
+                    {
+                        label: 'Away Losses',
+                        data: awayLosses, 
+                        borderColor: 'red', 
+                        fill: false
+                    }
+                ]
+            },
+            options: {
+                responsive: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Yearly Away Stats'
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Year'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Matches'
+                        },
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+    </script>
+<div style="height: 100px;"></div>
+
+<a href="/countries/show_options">Back to National Teams Analytics</a>
+</div>    
+    
+</body>
+</html>

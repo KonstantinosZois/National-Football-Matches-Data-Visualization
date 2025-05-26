@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Country Info</title>
+</head>
+<body>
+
+<div class="container text-center mt-5">
+
+<h2>Country Information</h2>
+
+<div>
+    <p><strong>ISO CODE:</strong> <span th:text="${country.iso_Code}"></span></p>
+    <p><strong>Country Name:</strong> <span th:text="${country.displayName}"></span></p>
+    <p><strong>Official Name:</strong> <span th:text="${country.officialName}"></span></p>
+    <p><strong>Capital:</strong> <span th:text="${country.capital}"></span></p>
+    <p><strong>Continent:</strong> <span th:text="${country.continent}"></span></p>
+    <p><strong>Currency Name:</strong> <span th:text="${country.currencyName}"></span></p>
+    <p><strong>Region Name:</strong> <span th:text="${country.regionName}"></span></p>
+    <p><strong>Status of Country:</strong> <span th:text="${country.statusofCountry}"></span></p>
+    <p><strong>Developed or not? :</strong> <span th:text="${country.developedOrNot}"></span></p>
+    <p><strong>Total Area (in sqKm):</strong> <span th:text="${country.areaSqKm}"></span></p>
+    <p><strong>Total Population:</strong> <span th:text="${country.population}"></span></p>
+
+</div>
+
+<form method="POST" action="/countries/matches">
+    <input type="hidden" name="iso_Code" th:value="${country.iso_Code}" />
+    <button type="submit" class="btn btn-primary">
+    View Matches
+	</button>
+</form>
+
+<div style="height: 30px;"></div>
+
+<form th:action="@{/countries/specific_year_stats}" method="post">
+    <input type="hidden" name="iso_Code" th:value="${country.iso_Code}" />
+    
+    
+    <label>Select Specific Year to view stats:</label>
+    <select name="specificyear">
+        <option value="0">--Any--</option>
+        <option th:each="year : ${years}"
+                th:value="${year.year}"
+                th:text="${year.year}">
+        </option>
+    </select>
+   <div th:if="${errorNoYear}" style="color: red;">
+    <p th:text="${errorNoYear}"></p>
+</div>
+    
+   <button type="submit" class="btn btn-primary">
+    View Year Details
+	</button>
+</form>
+
+<div style="height: 30px;"></div>
+
+<!-- Table displaying summary from DTO -->
+<h3>Country Home/Away Summary</h3>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Home Wins</th>
+            <th>Home Losses</th>
+            <th>Home Draws</th>
+            <th>Away Wins</th>
+            <th>Away Losses</th>
+            <th>Away Draws</th>
+            <th>Total Wins</th>
+            <th>Total Losses</th>
+            <th>Total Draws</th>
+            <th>Total Home Matches Played</th>
+            <th>Total Away Matches Played</th>
+            <th>Total Matches Played</th>
+            <th>First Year Appeared</th>
+            <th>Last Year Appeared</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td th:text="${summary.homeWins}"></td>
+            <td th:text="${summary.homeLosses}"></td>
+            <td th:text="${summary.homeDraws}"></td>
+            <td th:text="${summary.awayWins}"></td>
+            <td th:text="${summary.awayLosses}"></td>
+            <td th:text="${summary.awayDraws}"></td>
+            <td th:text="${summary.totalWins}"></td>
+            <td th:text="${summary.totalLosses}"></td>
+            <td th:text="${summary.totalDraws}"></td>
+            <td th:text="${summary.totalHomeMatchesPlayed}"></td>
+            <td th:text="${summary.totalAwayMatchesPlayed}"></td>
+            <td th:text="${summary.totalMatchesPlayed}"></td>
+            <td th:text="${summary.firstYear}"></td>
+            <td th:text="${summary.lastYear}"></td>
+        </tr>
+    </tbody>
+</table>
+
+
+<a th:href="@{/countries/{isoCode}/yearly_stats_chart(isoCode=${country.iso_Code})}">
+    <button type="submit" class="btn btn-primary">
+    View Yearly Stats
+	</button>
+</a>
+
+<div style="height: 30px;"></div>
+
+<a href="/">Back to HomePage</a>
+
+</div>
+</body>
+</html>

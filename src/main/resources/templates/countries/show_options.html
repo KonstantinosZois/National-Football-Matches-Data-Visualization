@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<!--<html lang="en">-->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+ <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Country Options</title>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+</head>
+<body>
+
+<div style="display: flex; flex-direction: column; align-items: center; margin-top: 30px;">
+
+<h2>Select Country</h2>
+
+<div style="height: 30px;"></div>
+
+<div th:if="${noStatsMessage != null}">
+    <p th:text="${noStatsMessage}"></p>
+</div>
+
+
+<form action="/countries/countries_info" method="POST">
+    <label for="country">Choose a Country:</label>
+    <select id="iso_Code" name="iso_Code" style="width: 300px;">
+        <option value="">--Select a Country--</option>
+        <th:block th:each="country : ${countries}">
+            <option th:value="${country.iso_Code}" th:text="${country.displayName}"></option>
+        </th:block>
+    </select>
+    <button type="submit" class="btn btn-primary">
+    Search
+    </button>
+</form>
+
+<script>
+  $(document).ready(function() {
+    $('#iso_Code').select2({
+      placeholder: "Type to search countries...",
+      allowClear: true
+    });
+  });
+</script>
+
+<div style="height: 30px;"></div>
+
+<h2>Show Leaderboard</h2>
+
+<form th:action="@{/countries/leaderboard}" method="post">
+
+    <label>Choose Method of Valuation:</label>
+    <select name="method">
+    	<option value="">-- Select --</option>
+        <option value="Countries By Wins">Countries By Wins</option>
+        <option value="Countries By Points">Countries By Points</option>
+        <option value="Countries By Wins Per Years Competed">Countries By Wins Per Years Competed</option>
+        <option value="Countries By Points Per Years Competed">Countries By Points Per Years Competed</option>
+    </select>
+   <div th:if="${errorNoBarChart}" style="color: red;">
+    <p th:text="${errorNoBarChart}"></p>
+</div>
+    
+    <button type="submit" class="btn btn-primary">
+    View Leaderboard
+    </button>
+</form>
+
+<div style="height: 30px;"></div>
+
+<h2>Create A BarChart</h2>
+
+<form th:action="@{/countries/barchart}" method="post">
+
+    <label>Create BarChart:</label>
+    <select name="requestedChart">
+    	<option value="">-- Select --</option>
+        <option value="Top Countries By Wins">Top Countries By Wins</option>
+        <option value="Top Countries By Points">Top Countries By Points</option>
+        <option value="Top Countries By Wins Per Years Competed">Top Countries By Wins Per Years Competed</option>
+        <option value="Top Countries By Points Per Years Competed">Top Countries By Points Per Years Competed</option>
+    </select>
+   <div th:if="${errorNoBarChart}" style="color: red;">
+    <p th:text="${errorNoBarChart}"></p>
+</div>
+    
+    <button type="submit" class="btn btn-primary">
+    View BarChart
+    </button>
+</form>
+
+<div style="height: 30px;"></div>
+
+<h2>Create A ScatterPlot</h2>
+
+<form th:action="@{/countries/scatter_plot}" method="post">
+
+    <label>Create Scatter Plot:</label>
+    <select name="scatterPlotSelect">
+    	<option value="">-- Select --</option>
+        <option value="Wins VS Population">Wins VS Population</option>
+        <option value="Wins VS AreaSqKm">Wins VS AreaSqKm</option>
+        <option value="Points VS Population">Points VS Population</option>
+        <option value="Points VS AreaSqKm">Points VS AreaSqKm</option>
+        <option value="Wins Per Years Competed VS Years Active">Wins Per Years Competed VS Years Active</option>
+        <option value="Wins vs Goals Scored">Wins vs Goals Scored</option>
+        <option value="Wins vs Goals Conceded">Wins vs Goals Conceded</option>
+    </select>
+   <div th:if="${errorNoBarChart}" style="color: red;">
+    <p th:text="${errorNoBarChart}"></p>
+</div>
+    
+    <button type="submit" class="btn btn-primary">
+    View ScatterPlot
+    </button>
+</form>
+
+
+<div style="height: 30px;"></div>
+<a href="/">Back to HomePage</a>
+
+
+</body>
+</html>

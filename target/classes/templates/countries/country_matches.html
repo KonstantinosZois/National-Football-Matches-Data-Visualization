@@ -1,0 +1,160 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+</head>
+
+
+
+<h2>Matches for selected country</h2>
+
+<form method="POST" action="/countries/matches">
+    <input type="hidden" name="iso_Code" th:value="${selectedCountryId}" />
+    
+<h3>Filters For Opponent Country</h3>
+
+    <label>Opponent Development Status:</label>
+    <select name="opponentDevStatus">
+        <option value="">--Any--</option>
+        <option value="Developed">Developed</option>
+        <option value="Developing">Developing</option>
+    </select>
+    
+     <label>Status:</label>
+   <select name="statusOpp">
+    <option value="">--Any--</option>
+    <option th:each="statusOfCountry : ${statusOfOpponents}"
+            th:value="${statusOfCountry}"
+            th:text="${statusOfCountry}">
+    </option>
+	</select>
+	
+	<label>Region Of Opponent's Country:</label>
+    <select name="regionOpp">
+        <option value="">--Any--</option>
+    	<option th:each="region : ${regions}"
+            th:value="${region}"
+            th:text="${region}">
+    </option>
+    </select>
+   
+<h3>Filters For Match Day</h3>
+
+    <label>Tournament:</label>
+   <select name="tournament">
+    <option value="">--Any--</option>
+    <option th:each="tournament : ${tournaments}"
+            th:value="${tournament}"
+            th:text="${tournament}">
+    </option>
+	</select>
+	
+	<label>Region Of Country:</label>
+    <select name="region">
+        <option value="">--Any--</option>
+    	<option th:each="region : ${regions}"
+            th:value="${region}"
+            th:text="${region}">
+    </option>
+    </select>
+    
+     <label>Status Of Country:</label>
+   <select name="statusCountry">
+    <option value="">--Any--</option>
+    <option th:each="statusOfCountryT : ${statusOfCountry}"
+            th:value="${statusOfCountryT}"
+            th:text="${statusOfCountryT}">
+    </option>
+	</select>
+    
+    <label>Development Status:</label>
+    <select name="countryDevStatus">
+        <option value="">--Any--</option>
+        <option value="Developed">Developed</option>
+        <option value="Developing">Developing</option>
+    </select>
+	
+	<label>Location:</label>
+   <select name="location">
+    <option value="">--Any--</option>
+    <option th:each="locationPlayed : ${locationsPlayed}"
+            th:value="${locationPlayed}"
+            th:text="${locationPlayed}">
+    </option>
+	</select>
+	
+	<label>Year:</label>
+   <select name="year">
+    <option value="">--Any--</option>
+    <option th:each="yearPlayed : ${yearsPlayed}"
+            th:value="${yearPlayed}"
+            th:text="${yearPlayed}">
+    </option>
+	</select>
+
+    <label>Only Home Matches or Away Matches:</label>
+    <select name="onlyHomeMatchesOrAwayMatches">
+     <option value="">--Any--</option>
+        <option value="Home Matches">Home Matches</option>
+        <option value="Away Matches">Away Matches</option>
+        <option value="Neutral">Neutral</option>
+    </select>
+    
+    <label>Result:</label>
+    <select name="result">
+     <option value="">--Any--</option>
+     	<option value="Wins By 3+ Goals">Wins By 3+ Goals</option>
+     	<option value="Wins By Exactly 2 Goals">Wins By Exactly 2 Goals</option>
+     	<option value="Wins By Exactly 1 Goal">Wins By Exactly 1 Goal</option>
+        <option value="Wins">Wins</option>
+        <option value="Won On Shootouts">Won On Shootouts</option>
+        <option value="Went To Shootouts">Went To Shootouts</option>
+        <option value="Draws">Draws</option>
+        <option value="Lost On Shootouts">Lost On Shootouts</option>
+        <option value="Losses">Losses</option>
+        <option value="Losses By Exactly 1 Goal">Losses By Exactly 1 Goal</option>
+        <option value="Losses By Exactly 2 Goals">Losses By Exactly 2 Goals</option>
+        <option value="Losses By 3+ Goals">Losses By 3+ Goals</option>
+    </select>
+    
+    <label for="startDate">Start Date:</label>
+    <input type="date" id="startDate" name="startDate" />
+
+    <label for="endDate">End Date:</label>
+    <input type="date" id="endDate" name="endDate" />
+    
+
+    <button type="submit" class="btn btn-primary">
+    Apply Filter
+	</button>
+</form>
+
+<table class="table table-bordered table-striped">
+		<thead class="thead-dark">
+
+        <tr>
+            <th>Date</th><th>Home</th><th>Away</th><th>Score</th><th>City</th><th>Location</th><th>Tournament</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="match : ${matches}">
+            <td th:text="${match.matchDate}"></td>
+            <td th:text="${match.homeTeamName}"></td>
+            <td th:text="${match.awayTeamName}"></td>
+            <td th:text="${match.homeScore} + ' - ' + ${match.awayScore}"></td>
+            <td th:text="${match.city}"></td>
+            <td th:text="${match.countryName}"></td>
+            <td th:text="${match.tournament}"></td>
+        </tr>
+    </tbody>  
+</table>
+ <a href="/">Back to HomePage</a> 
+ 
+ </html>

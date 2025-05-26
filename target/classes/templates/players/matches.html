@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+</head>
+
+<body>
+
+<h2>Player Goals List</h2>
+
+<div style="height: 30px;"></div>
+
+<h5>Filters For Matches</h5>
+
+<form action="/players/matches" method="POST">
+    <input type="hidden" name="scorer" th:value="${scorer}"/>
+    <input type="hidden" name="countryName" th:value="${countryName}"/>
+
+    <label>OwnGoal:</label>
+    <select name="ownGoal">
+        <option value="">--Any--</option>
+        <option value="true">True</option>
+        <option value="false">False</option>
+    </select>
+    
+    <label>Penalty Goal:</label>
+    <select name="penalty">
+        <option value="">--Any--</option>
+        <option value="true">True</option>
+        <option value="false">False</option>
+    </select>
+    
+    <label>Tournament:</label>
+   <select name="tournament">
+    <option value="">--Any--</option>
+    <option th:each="tournament : ${tournaments}"
+            th:value="${tournament}"
+            th:text="${tournament}">
+    </option>
+	</select>
+    
+	<button type="submit" class="btn btn-primary">
+    Apply Filter
+	</button>
+</form>
+
+<table class="table table-bordered table-striped">
+		<thead class="thead-dark">
+
+        <tr>
+            <th>Date</th><th>Home</th><th>Away</th><th>Score</th><th>Tournament</th><th>Minute Of Goal</th><th>OwnGoal</th><th>Penalty Goal</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="match : ${matches}">
+            <td th:text="${match.matchDate}"></td>
+            <td th:text="${match.homeTeamName}"></td>
+            <td th:text="${match.awayTeamName}"></td>
+            <td th:text="${match.homeScore} + ' - ' + ${match.awayScore}"></td>
+            <td th:text="${match.tournament}"></td>
+            <td th:text="${match.minuteOfGoal}"></td>
+            <td th:text="${match.ownGoal}"></td>
+            <td th:text="${match.penalty}"></td>
+        </tr>
+    </tbody>  
+</table>
+ <a href="/">Back to HomePage</a> 
+ 
+ 
+</body>
+
+</html>

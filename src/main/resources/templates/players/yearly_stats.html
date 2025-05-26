@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <title>Yearly Stats</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        canvas {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<div style="display: flex; flex-direction: column; align-items: center; margin-top: 30px;">
+    <h2>Yearly Stats</h2>
+    
+   
+    <canvas id="yearlyStatsChart" width="1000" height="600"></canvas>
+    
+    <script th:inline="javascript">
+
+        var yearlyStats = /*[[${yearlyStats}]]*/ [];
+        var years = yearlyStats.map(function(d) { return d.year; });
+        var totalGoalsByPlayer = yearlyStats.map(function(d) { return d.totalGoalsByPlayer; });
+        var maxGoalsInMatch = yearlyStats.map(function(d) { return d.maxGoalsInMatch; });
+        var totalGoalsByCountry = yearlyStats.map(function(d) { return d.totalGoalsByCountry; });
+        
+         var ctx = document.getElementById('yearlyStatsChart').getContext('2d');
+        
+        new Chart(ctx, {
+            type: 'line', 
+            data: {
+                labels: years, 
+                datasets: [
+                    {
+                        label: 'Total Player Goals',
+                        data: totalGoalsByPlayer, 
+                        borderColor: 'green', 
+                        fill: false
+                    },
+                    {
+                        label: 'Total Team Goals',
+                        data: totalGoalsByCountry, 
+                        borderColor: 'blue', 
+                        fill: false
+                    },
+                    {
+                        label: 'Max Player Goals In A Match',
+                        data: maxGoalsInMatch, 
+                        borderColor: 'red', 
+                        fill: false
+                    }
+                ]
+            },
+            options: {
+                responsive: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Yearly Total Stats'
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Year'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Goals'
+                        },
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+</script>
+
+<div style="height: 100px;"></div>
+<a href="/players/show_list_of_players">Back to Player Analytics</a>
+<a href="/">Back to HomePage</a>
+</div>
+
+</html>
+</body>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Player</title>
+</head>
+<body>
+
+<div class="container text-center mt-5">
+
+<h2>Multiple Players Found</h2>
+<p>Select the exact player:</p>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Country</th>
+            <th>Select</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="player : ${players}">
+            <td th:text="${player.scorer}"></td>
+            <td th:text="${player.countryName}"></td>
+            <td>
+                <form th:action="@{/players/search}" method="post">
+                    <input type="hidden" name="scorer" th:value="${player.scorer}" />
+                    <input type="hidden" name="countryName" th:value="${player.countryName}" />
+                    <button type="submit" class="btn btn-primary">
+    				Select
+					</button>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+</div>
+</body>
+</html>

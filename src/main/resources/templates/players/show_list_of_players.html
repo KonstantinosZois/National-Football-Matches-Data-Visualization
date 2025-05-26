@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Player</title>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+</head>
+<body>
+
+<div style="display: flex; flex-direction: column; align-items: center; margin-top: 30px;">
+
+<h2>Select Player</h2>
+
+<form action="/players/player_info" method="POST">
+    <label for="scorer">Choose a Player:</label>
+    <select id="scorer" name="scorer" style="width: 300px;">
+        <option value="">--Select a Player--</option>
+        <th:block th:each="player : ${players}">
+            <option th:value="${player.scorer}" th:text="${player.scorer}"></option>
+        </th:block>
+    </select>
+    <button type="submit" class="btn btn-primary">
+    Search
+	</button>
+</form>
+
+<script>
+  $(document).ready(function() {
+    $('#scorer').select2({
+      placeholder: "Type to search players...",
+      allowClear: true
+    });
+  });
+</script>
+
+<div style="height: 30px;"></div>
+
+<h2>Create A BarChart</h2>
+
+<form th:action="@{/players/barchart}" method="post">
+
+    <label>Create BarChart:</label>
+    <select name="requestedChart">
+    	<option value="">-- Select --</option>
+        <option value="Top Players By Goals">Top Players By Goals</option>
+        <option value="Top Players By Penalty Goals">Top Players By Penalty Goals</option>
+    </select>
+   <div th:if="${errorNoBarChart}" style="color: red;">
+    <p th:text="${errorNoBarChart}"></p>
+</div>
+    
+    <button type="submit" class="btn btn-primary">
+    View BarChart
+	</button>
+</form>
+
+<div style="height: 30px;"></div>
+<a href="/">Back to HomePage</a>
+
+</div>
+
+
+</body>
+</html>

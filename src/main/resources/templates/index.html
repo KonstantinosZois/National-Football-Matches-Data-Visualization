@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+	<title>Homepage</title>
+</head>
+
+
+<body>
+
+<div class="container text-center mt-5">
+    <h2 class="mb-4">Welcome to Football Analytics</h2>
+    <div class="d-flex justify-content-center flex-wrap">
+        <a th:href="@{/players/show_list_of_players}" class="btn btn-primary btn-lg m-2">Players</a>
+        <a th:href="@{/countries/show_options}" class="btn btn-primary btn-lg m-2">National Teams</a>
+        <a th:href="@{/yearlyStats/choose_year}" class="btn btn-primary btn-lg m-2">Years</a>
+    </div>
+</div>
+  
+</body>
+</html>

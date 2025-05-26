@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!--<html lang="en">-->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+ <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Country Options</title>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+</head>
+<body>
+
+<div style="display: flex; flex-direction: column; align-items: center; margin-top: 30px;">
+
+<h2>Select Year</h2>
+
+<div style="height: 30px;"></div>
+
+<form action="/yearlyStats/specific_year_stats" method="POST">
+ <label>Year:</label>
+   <select name="chosenYear">
+    <option value="0">--Any--</option>
+    <option th:each="year : ${availableYears}"
+            th:value="${year}"
+            th:text="${year}">
+    </option>
+	</select>
+	<button type="submit" class="btn btn-primary">
+    Search
+	</button>
+</form>
+
+ <div style="height: 100px;"></div>
+ <a th:href="@{/}">Back to HomePage</a>
+ 
+ </div>
+ </body>
+ </html>

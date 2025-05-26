@@ -1,0 +1,145 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+</head>
+
+
+
+<h2>Matches for selected year</h2>
+
+<form method="POST" action="/yearlyStats/all_matches">
+    <input type="hidden" name="year" th:value="${year}" />
+
+<h3>Filters For Home Country</h3>
+    <label>Development Status Of Country:</label>
+    <select name="devStatusHome">
+        <option value="">--Any--</option>
+        <option value="Developed">Developed</option>
+        <option value="Developing">Developing</option>
+    </select>
+    
+    <label>Status:</label>
+   <select name="statusHome">
+    <option value="">--Any--</option>
+    <option th:each="statusOfCountry : ${statusParticipants}"
+            th:value="${statusOfCountry}"
+            th:text="${statusOfCountry}">
+    </option>
+	</select>
+	
+	<label>Region Of Country:</label>
+    <select name="regionHome">
+        <option value="">--Any--</option>
+    	<option th:each="region : ${regions}"
+            th:value="${region}"
+            th:text="${region}">
+    </option>
+    </select>
+
+<h3>Filters For Match</h3>
+
+    <label>Tournament:</label>
+   <select name="tournament">
+    <option value="">--Any--</option>
+    <option th:each="tournament : ${tournaments}"
+            th:value="${tournament}"
+            th:text="${tournament}">
+    </option>
+	</select>
+	
+<label>Location:</label>
+   <select name="location">
+    <option value="">--Any--</option>
+    <option th:each="locationPlayed : ${locationsPlayed}"
+            th:value="${locationPlayed}"
+            th:text="${locationPlayed}">
+    </option>
+	</select>
+	
+	<label>Development Status Of Country:</label>
+    <select name="devStatus">
+        <option value="">--Any--</option>
+        <option value="Developed">Developed</option>
+        <option value="Developing">Developing</option>
+    </select>
+    
+    <label>Status:</label>
+   <select name="status">
+    <option value="">--Any--</option>
+    <option th:each="statusOfCountry : ${status}"
+            th:value="${statusOfCountry}"
+            th:text="${statusOfCountry}">
+    </option>
+	</select>
+	
+	<label>Region Where The Match Took Place:</label>
+   <select name="region">
+    <option value="">--Any--</option>
+    <option th:each="region : ${regions}"
+            th:value="${region}"
+            th:text="${region}">
+    </option>
+	</select>
+ 
+ <h3>Filters For Away Country</h3>
+    <label>Development Status Of Country:</label>
+    <select name="devStatusAway">
+        <option value="">--Any--</option>
+        <option value="Developed">Developed</option>
+        <option value="Developing">Developing</option>
+    </select>
+    
+    <label>Status:</label>
+   <select name="statusAway">
+    <option value="">--Any--</option>
+    <option th:each="statusOfCountry : ${statusParticipants}"
+            th:value="${statusOfCountry}"
+            th:text="${statusOfCountry}">
+    </option>
+	</select>
+	
+	<label>Region Of Country:</label>
+    <select name="regionAway">
+        <option value="">--Any--</option>
+    	<option th:each="region : ${regions}"
+            th:value="${region}"
+            th:text="${region}">
+    </option>
+    </select> 	 
+
+    <button type="submit" class="btn btn-primary">
+    Apply Filter
+	</button>
+</form>
+
+<table class="table table-bordered table-striped">
+		<thead class="thead-dark">
+
+        <tr>
+            <th>Date</th><th>Home</th><th>Away</th><th>Score</th><th>Location</th><th>Tournament</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="match : ${matches}">
+            <td th:text="${match.matchDate}"></td>
+            <td th:text="${match.homeTeamName}"></td>
+            <td th:text="${match.awayTeamName}"></td>
+            <td th:text="${match.homeScore} + ' - ' + ${match.awayScore}"></td>
+            <td th:text="${match.countryName}"></td>
+            <td th:text="${match.tournament}"></td>
+        </tr>
+    </tbody>  
+</table>
+ <a th:href="@{/yearlyStats/choose_year}">Back to Search</a>
+ 
+ 
+ 
+ </html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Country Info</title>
+</head>
+<body>
+
+<h2>Specific Year Information</h2>
+
+<table border="1">
+   <thead>
+        <tr>
+            <th>Home Wins</th>
+            <th>Home Losses</th>
+            <th>Home Draws</th>
+            <th>Away Wins</th>
+            <th>Away Losses</th>
+            <th>Away Draws</th>
+            <th>Total Wins</th>
+            <th>Total Losses</th>
+            <th>Total Draws</th>
+            <th>Total Home Matches Played</th>
+            <th>Total Away Matches Played</th>
+            <th>Total Matches Played</th>
+            <th>Total Penalties</th>
+            <th>Total Matches Won On Penalties</th>
+            <th>Total Matches Lost On Penalties</th>
+            <th>Home Goals Scored</th>
+            <th>Goals Conceded At Home</th>
+            <th>Away Goals Scored</th>
+            <th>Goals Conceded Away</th>
+             <th>Total Goals Scored</th>
+            <th>Total Goals Conceded</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td th:text="${specificYear.homeWins}"></td>
+            <td th:text="${specificYear.homeLosses}"></td>
+            <td th:text="${specificYear.homeDraws}"></td>
+            <td th:text="${specificYear.awayWins}"></td>
+            <td th:text="${specificYear.awayLosses}"></td>
+            <td th:text="${specificYear.awayDraws}"></td>
+            <td th:text="${specificYear.totalWins}"></td>
+            <td th:text="${specificYear.totalLosses}"></td>
+            <td th:text="${specificYear.totalDraws}"></td>
+            <td th:text="${specificYear.homeMatchesPlayed}"></td>
+            <td th:text="${specificYear.awayMatchesPlayed}"></td>
+            <td th:text="${specificYear.totalMatchesPlayed}"></td>
+            <td th:text="${specificYear.penaltyMatches}"></td>
+            <td th:text="${specificYear.penaltyWins}"></td>
+            <td th:text="${specificYear.penaltyLosses}"></td>
+            <td th:text="${specificYear.homeGoalsScored}"></td>
+            <td th:text="${specificYear.homeGoalsConceded}"></td>
+            <td th:text="${specificYear.awayGoalsScored}"></td>
+            <td th:text="${specificYear.awayGoalsConceded}"></td>
+             <td th:text="${specificYear.totalGoalsScored}"></td>
+            <td th:text="${specificYear.totalGoalsConceded}"></td>
+        </tr>
+    </tbody>
+</table>
+
+<div style="display: flex; flex-direction: column; align-items: center; margin-top: 30px;">
+    <h3 style="margin-bottom: 5px;">Statistics for the Specified Country</h3>
+    <canvas id="matchResultsChart" width="400" height="300"></canvas>
+    <canvas id="goalsChart" width="400" height="300"></canvas>
+    <canvas id="penaltyChart" width="400" height="300"></canvas>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script th:inline="javascript">
+    const matchResultsData = {
+        labels: ['Total Wins', 'Total Draws', 'Total Losses','Home Wins', 'Home Draws', 'Home Losses', 'Away Wins', 'Away Draws', 'Away Losses'],
+        values: [
+        	[[${specificYear.totalWins}]],
+            [[${specificYear.totalDraws}]],
+            [[${specificYear.totalLosses}]],
+            [[${specificYear.homeWins}]],
+            [[${specificYear.homeDraws}]],
+            [[${specificYear.homeLosses}]],
+            [[${specificYear.awayWins}]],
+            [[${specificYear.awayDraws}]],
+            [[${specificYear.awayLosses}]]
+        ]
+    };
+
+    const goalsData = {
+        labels: ['Total Scored', 'Total Conceded','Home Scored', 'Conceded At Home', 'Away Scored', 'Conceded Away'],
+        values: [
+        	[[${specificYear.totalGoalsScored}]],
+            [[${specificYear.totalGoalsConceded}]],
+            [[${specificYear.homeGoalsScored}]],
+            [[${specificYear.homeGoalsConceded}]],
+            [[${specificYear.awayGoalsScored}]],
+            [[${specificYear.awayGoalsConceded}]]
+        ]
+    };
+
+    const penaltyData = {
+        labels: ['Penalty Matches', 'Penalty Wins', 'Penalty Losses'],
+        values: [
+            [[${specificYear.penaltyMatches}]],
+            [[${specificYear.penaltyWins}]],
+            [[${specificYear.penaltyLosses}]]
+        ]
+    };
+</script>
+
+<script>
+    function renderBarChart(canvasId, chartTitle, labels, values) {
+        const ctx = document.getElementById(canvasId).getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: chartTitle,
+                    data: values,
+                    backgroundColor: 'rgba(65, 105, 225, 0.6)',
+                    borderColor: 'rgba(65, 105, 225, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: chartTitle
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+    // Wait for DOM content to be fully loaded
+    window.addEventListener('DOMContentLoaded', function () {
+        renderBarChart('matchResultsChart', 'Match Results', matchResultsData.labels, matchResultsData.values);
+        renderBarChart('goalsChart', 'Goals Scored vs Conceded', goalsData.labels, goalsData.values);
+        renderBarChart('penaltyChart', 'Penalty Statistics', penaltyData.labels, penaltyData.values);
+    });
+</script>
+
+<a href="/countries/show_options">Back to National Teams Analytics</a>
+</div>
