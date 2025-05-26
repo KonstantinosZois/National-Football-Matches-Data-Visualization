@@ -27,6 +27,7 @@ This project was developed in the context of the **MYE030** course at the
 3. **Load the clean CSV files** into the corresponding database tables.
 4. Update `application.properties` with your **own database credentials** and connection settings.
 5. Run the project by executing the **main class** as a Java application from your IDE.
+6. Connect to localhost:8080
 
 
 
